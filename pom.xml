@@ -92,7 +92,38 @@
                                             <command>/subsystem=security/security-domain=sp/authentication=classic:add(login-modules=[{"code"=>"org.picketlink.identity.federation.bindings.wildfly.SAML2LoginModule", "flag"=>"required"}])</command>
                                             <command>/system-property=service.url:add(value=${service.url}})</command>
                                             <command>/system-property=idp.url:add(value=${idp.url}})</command>
-                                            <command>:shutdown(restart=true)</command>
+                                            <command timeout="120">:shutdown(restart=true)</command>
+                                        </commands>
+                                    </execute-commands>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>clean</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.wildfly.plugins</groupId>
+                        <artifactId>wildfly-maven-plugin</artifactId>
+                        <version>${version.wildfly.maven.plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>execute-commands</id>
+                                <goals>
+                                    <goal>execute-commands</goal>
+                                </goals>
+                                <phase>install</phase>
+                                <configuration>
+                                    <execute-commands>
+                                        <commands>
+                                            <command>/subsystem=security/security-domain=sp:remove</command>
+                                            <command>/system-property=service.url:remove</command>
+                                            <command>/system-property=idp.url:remove</command>
+                                            <command timeout="120">:shutdown(restart=true)</command>
                                         </commands>
                                     </execute-commands>
                                 </configuration>

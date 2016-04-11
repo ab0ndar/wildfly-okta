@@ -26,6 +26,11 @@ https://ngrok.com/download
     ```
 
 ## Run sp-redirect sample
+0. If you ran another sample before, clean up the WildFly configuration first:
+  
+    ```
+    mvn3 install -P clean
+    ```
 1. Install "sp" security domain to WildFly
     
     ```
@@ -42,6 +47,11 @@ https://ngrok.com/download
 6. Click "Sign In"
 
 ## Run sp-post sample
+0. If you ran another sample before, clean up the WildFly configuration first:
+  
+    ```
+    mvn3 install -P clean
+    ```
 1. Install "sp" security domain to WildFly
     
     ```

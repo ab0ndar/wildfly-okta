@@ -78,4 +78,31 @@
 		</plugins>
 	</build>
 
+	<profiles>
+		<profile>
+			<id>clean</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.wildfly.plugins</groupId>
+						<artifactId>wildfly-maven-plugin</artifactId>
+						<version>${version.wildfly.maven.plugin}</version>
+						<executions>
+							<execution>
+								<id>undeploy</id>
+								<goals>
+									<goal>undeploy</goal>
+								</goals>
+								<phase>install</phase>
+								<configuration>
+									<filename>${project.build.finalName}.${project.packaging}</filename>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 </project>
