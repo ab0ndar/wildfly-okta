@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.wildfly-okta</groupId>
+	<artifactId>sp-post</artifactId>
+	<version>0.0.1</version>
+	<packaging>war</packaging>
+
+	<name>sp-post</name>
+	<description>SAML Service Provider [binding:post] authenticates users through Okta Identity Provider</description>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<distribution>repo</distribution>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+		</license>
+	</licenses>
+
+	<properties>
+		<!-- WildFly dependency versions -->
+		<version.wildfly.maven.plugin>1.0.1.Final</version.wildfly.maven.plugin>
+
+		<!-- PicketLink dependency versions -->
+		<version.picketlink.javaee.bom>2.7.2.Final-SNAPSHOT</version.picketlink.javaee.bom>
+
+		<!-- maven-war-plugin -->
+		<version.war.plugin>2.1.1</version.war.plugin>
+
+		<!-- maven-compiler-plugin -->
+		<version.compiler.plugin>3.1</version.compiler.plugin>
+		<maven.compiler.target>1.6</maven.compiler.target>
+		<maven.compiler.source>1.6</maven.compiler.source>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.wildfly-okta</groupId>
+			<artifactId>sp-common</artifactId>
+			<version>0.0.1</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<!-- Set the name of the war, used as the context root when the app is deployed -->
+		<finalName>${project.artifactId}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${version.war.plugin}</version>
+				<configuration>
+					<!-- Java EE 6 doesn't require web.xml, Maven needs to catch up! -->
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+
+					<webResources>
+						<resource>
+							<directory>src/main/webapp</directory>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>${version.wildfly.maven.plugin}</version>
+				<configuration>
+					<filename>${project.build.finalName}.${project.packaging}</filename>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

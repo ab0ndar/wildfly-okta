@@ -21,6 +21,7 @@
 
     <modules>
         <module>sp-redirect</module>
+        <module>sp-post</module>
     </modules>
 
     <properties>
@@ -40,4 +41,66 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>conf</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <version>1.4.1</version>
+                        <executions>
+                            <execution>
+                                <id>enforce-property</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <phase>validate</phase>
+                                <configuration>
+                                    <rules>
+                                        <requireProperty>
+                                            <property>service.url</property>
+                                            <message>You must set a service.url property!</message>
+                                        </requireProperty>
+                                        <requireProperty>
+                                            <property>idp.url</property>
+                                            <message>You must set an idp.url property!</message>
+                                        </requireProperty>
+                                    </rules>
+                                    <fail>true</fail>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.wildfly.plugins</groupId>
+                        <artifactId>wildfly-maven-plugin</artifactId>
+                        <version>${version.wildfly.maven.plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>execute-commands</id>
+                                <goals>
+                                    <goal>execute-commands</goal>
+                                </goals>
+                                <phase>install</phase>
+                                <configuration>
+                                    <execute-commands>
+                                        <commands>
+                                            <command>/subsystem=security/security-domain=sp/:add(cache-type=default)</command>
+                                            <command>/subsystem=security/security-domain=sp/authentication=classic:add(login-modules=[{"code"=>"org.picketlink.identity.federation.bindings.wildfly.SAML2LoginModule", "flag"=>"required"}])</command>
+                                            <command>/system-property=service.url:add(value=${service.url}})</command>
+                                            <command>/system-property=idp.url:add(value=${idp.url}})</command>
+                                            <command>:shutdown(restart=true)</command>
+                                        </commands>
+                                    </execute-commands>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

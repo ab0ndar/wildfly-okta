@@ -5,24 +5,11 @@
     <groupId>org.wildfly-okta</groupId>
     <artifactId>sp-redirect</artifactId>
     <version>0.0.1</version>
-    <dependencies>
-        <dependency>
-            <groupId>org.picketlink</groupId>
-            <artifactId>picketlink-federation</artifactId>
-            <version>2.7.0.CR2</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.picketlink</groupId>
-            <artifactId>picketlink-common</artifactId>
-            <version>2.7.0.CR2</version>
-        </dependency>
-    </dependencies>
 
     <packaging>war</packaging>
 
     <name>sp-redirect</name>
-    <description>SAML Service Provider [binding:post] authenticates users through Okta Identity Provider</description>
+    <description>SAML Service Provider [binding:redirect] authenticates users through Okta Identity Provider</description>
 
     <licenses>
         <license>
@@ -48,6 +35,15 @@
         <maven.compiler.source>1.6</maven.compiler.source>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.wildfly-okta</groupId>
+            <artifactId>sp-common</artifactId>
+            <version>0.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
     <build>
         <!-- Set the name of the war, used as the context root when the app is deployed -->
         <finalName>${project.artifactId}</finalName>
@@ -64,8 +60,6 @@
                     <!-- Java EE 6 doesn't require web.xml, Maven needs to catch up! -->
                     <failOnMissingWebXml>false</failOnMissingWebXml>
 
-                    <!-- Instead of duplicating resources for each example application, we just reuse all resources from the
-                    base application. -->
                     <webResources>
                         <resource>
                             <directory>src/main/webapp</directory>
@@ -83,60 +77,4 @@
             </plugin>
         </plugins>
     </build>
-    <profiles>
-        <profile>
-            <id>conf</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-enforcer-plugin</artifactId>
-                        <version>1.4.1</version>
-                        <executions>
-                            <execution>
-                                <id>enforce-property</id>
-                                <goals>
-                                    <goal>enforce</goal>
-                                </goals>
-                                <phase>validate</phase>
-                                <configuration>
-                                    <rules>
-                                        <requireProperty>
-                                            <property>service.url</property>
-                                            <message>You must set a service.url property!</message>
-                                        </requireProperty>
-                                    </rules>
-                                    <fail>true</fail>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.wildfly.plugins</groupId>
-                        <artifactId>wildfly-maven-plugin</artifactId>
-                        <version>${version.wildfly.maven.plugin}</version>
-                        <executions>
-                            <execution>
-                            <id>execute-commands</id>
-                            <goals>
-                                <goal>execute-commands</goal>
-                            </goals>
-                            <phase>install</phase>
-                            <configuration>
-                                <execute-commands>
-                                    <commands>
-                                        <command>/subsystem=security/security-domain=sp/:add(cache-type=default)</command>
-                                        <command>/subsystem=security/security-domain=sp/authentication=classic:add(login-modules=[{"code"=>"org.picketlink.identity.federation.bindings.wildfly.SAML2LoginModule", "flag"=>"required"}])</command>
-                                        <command>/system-property=service.url:add(value=${service.url}})</command>
-                                        <command>:shutdown(restart=true)</command>
-                                    </commands>
-                                </execute-commands>
-                            </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>

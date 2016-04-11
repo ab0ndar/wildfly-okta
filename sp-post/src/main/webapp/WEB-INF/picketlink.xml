@@ -1,0 +1,13 @@
+<PicketLink xmlns="urn:picketlink:identity-federation:config:2.1">
+	<PicketLinkSP xmlns="urn:picketlink:identity-federation:config:2.1" ServerEnvironment="tomcat" BindingType="POST">
+		<ServiceURL>${service.url}</ServiceURL>
+		<IdentityURL>${idp.url}</IdentityURL>
+	</PicketLinkSP>
+
+	<Handlers xmlns="urn:picketlink:identity-federation:handler:config:2.1">
+		<Handler class="org.picketlink.identity.federation.web.handlers.saml2.SAML2LogOutHandler" />
+		<Handler class="org.ab0ndar.SAML2OktaAuthenticationHandler">
+			<Option Key="DEFAULT_USER_ROLE" Value="guest"/>
+		</Handler>
+	</Handlers>
+</PicketLink>

@@ -25,7 +25,7 @@ https://ngrok.com/download
 2. Install "sp" security domain to WildFly
     
     ```
-    $ mvn install -P conf -Dservice.url=http://xxxxxxxx.ngrok.io/hello
+    $ mvn install -P conf -Dservice.url=http://xxxxxxxx.ngrok.io/hello -Didp.url=http://idp.oktadev.com
     ```
 3. Build and install sample application
     
@@ -33,8 +33,14 @@ https://ngrok.com/download
     $ mvn install wildfly:deploy
     ```
 
-## Run
+## Run sp-redirect sample
 1. Open http://localhost:8080/hello in browser
+2. You will be redirected to Okta Development IDP
+3. Put url service url into "Issuer", "SP ACS URL" and "SP Audience URI" fields
+4. Click "Sign In"
+
+## Run sp-post sample
+1. Open http://localhost:8080/halo in browser
 2. You will be redirected to Okta Development IDP
 3. Put url service url into "Issuer", "SP ACS URL" and "SP Audience URI" fields
 4. Click "Sign In"
