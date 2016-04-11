@@ -9,7 +9,6 @@ https://ngrok.com/download
 ## Install
 
 1. Start tunnel to the local WildFly instance
-
 ```
 $ ./ngrok http 8080
 
