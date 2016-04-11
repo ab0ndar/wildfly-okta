@@ -1,0 +1,17 @@
+<PicketLink xmlns="urn:picketlink:identity-federation:config:2.1">
+	<PicketLinkSP xmlns="urn:picketlink:identity-federation:config:2.1" ServerEnvironment="tomcat" BindingType="REDIRECT">
+		<ServiceURL>${service.url}</ServiceURL>
+
+		<MetaDataProvider ClassName="org.ab0ndar.URLBasedEntityMetadataProvider">
+			<Option Key="URL" Value="http://idp.oktadev.com/metadata"/>
+		</MetaDataProvider>
+	</PicketLinkSP>
+
+	<Handlers xmlns="urn:picketlink:identity-federation:handler:config:2.1">
+		<Handler class="org.picketlink.identity.federation.web.handlers.saml2.SAML2LogOutHandler" />
+		<Handler class="org.ab0ndar.SAML2OktaAuthenticationHandler">
+			<Option Key="DEFAULT_USER_ROLE" Value="guest"/>
+			<Option Key="ASSERTION_SESSION_ATTRIBUTE_NAME" Value="org.picketlink.sp.assertion"/>
+		</Handler>
+	</Handlers>
+</PicketLink>
