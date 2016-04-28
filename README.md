@@ -1,5 +1,5 @@
 # wildfly-okta
-Simple example demonstrates how to integrate [Okta](https://www.okta.com/) as [Identity Provider](https://en.wikipedia.org/wiki/Identity_provider) into [Wildfly](http://wildfly.org/) application server which serves as Service Provider by means of [PicketLink](http://picketlink.org/) framework. 
+Simple example demonstrates how to integrate [Okta](https://www.okta.com/) as [Identity Provider](https://en.wikipedia.org/wiki/Identity_provider) into [Wildfly](http://wildfly.org/) application server (aka open source JBOSS) which serves as Service Provider by means of [PicketLink](http://picketlink.org/) framework. 
 There are two SAML 2.0 bindings shown: [REDIRECT](https://en.wikipedia.org/wiki/SAML_2.0#HTTP_Redirect_Binding) in the [sp-redirect](./sp-redirect) module and [POST](https://en.wikipedia.org/wiki/SAML_2.0#HTTP_POST_Binding) in the [sp-post](./sp-post) correspondingly. 
 This example extends couple of [PicketLink](http://picketlink.org/) classes (see [sp-common classes](./sp-common/src/main/java/org/ab0ndar/)) in order to overcome discrepancies in SAML 2.0 implementation between PicketLink and Okta.     
 
