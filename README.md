@@ -46,7 +46,7 @@ So, here is a link to [ngrok](https://ngrok.com/download)
     ```
 3. Open http://localhost:8080/hello in browser
 4. You will be redirected to Okta Development IDP
-5. Put url service url into "Issuer", "SP ACS URL" and "SP Audience URI" fields
+5. Put service url into "Issuer", "SP ACS URL" and "SP Audience URI" fields
 6. Click "Sign In"
 
 ## Run sp-post sample
@@ -67,5 +67,5 @@ So, here is a link to [ngrok](https://ngrok.com/download)
     ```
 3. Open http://localhost:8080/halo in browser
 4. You will be redirected to Okta Development IDP
-5. Put url service url into "Issuer", "SP ACS URL" and "SP Audience URI" fields
+5. Put service url into "Issuer", "SP ACS URL" and "SP Audience URI" fields
 6. Click "Sign In"
